@@ -145,18 +145,39 @@ public class Food {
 	
 	private void addMappings(String s) {
 		unitNameToAmtInServing.put("servings", 1.0);
-
-		// just look for grams in parens for now, which seems pretty common
-		// TODO, look for other patterns. e.g., volume measurements
-		Pattern p = Pattern.compile("\\((\\d+)g\\)");
-		Matcher m = p.matcher(s);		
-		if (m.find()) {
+		
+		Pattern p;
+		Matcher m;
+		
+		// look for a number, possibly with a decimal, then one or more words.
+		// space in-between is optional; often not used for grams
+		p = Pattern.compile("(\\d+\\.?\\d*)\\s?([\\s\\w]+)");
+		m = p.matcher(s);
+		while(m.find()) {
 			String v_string = m.group(1);
-			Double v = Double.parseDouble(v_string);
-			unitNameToAmtInServing.put("grams", v);
+			String unit_name = m.group(2);
 			
+			unitNameToAmtInServing.put(unit_name, Double.valueOf(v_string));
+		}
+
+		// as above, but look for fractional numbers
+		p = Pattern.compile("(\\d+)/(\\d+)\\s?([\\s\\w]+)");
+		m = p.matcher(s);
+		while(m.find()) {
+			String num_string = m.group(1);
+			String denom_string = m.group(2);
+			String unit_name = m.group(3);
+			
+			unitNameToAmtInServing.put(unit_name, Double.valueOf(num_string) / Double.valueOf(denom_string));
+		}
+		
+		// lots of entries have grams. in these cases, also provide ounces
+		// TODO other such automatic conversions?
+		if (unitNameToAmtInServing.containsKey("g")) {
 			final double grams_per_oz = 28.3495231;
-			unitNameToAmtInServing.put("ounces", v/grams_per_oz);
+			// including "(mass)" do disambiguate from fluid ounces
+			unitNameToAmtInServing.put("oz (mass)", 
+					unitNameToAmtInServing.get("g")/grams_per_oz);
 		}
 	}
 }
