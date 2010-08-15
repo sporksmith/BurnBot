@@ -160,7 +160,7 @@ public class Food {
 		
 		// look for a number, possibly with a decimal, then one or more words.
 		// space in-between is optional; often not used for grams
-		p = Pattern.compile("(\\d+\\.?\\d*)\\s?([\\s\\w]+)");
+		p = Pattern.compile("(\\d+\\.?\\d*)\\s?(\\w[\\s\\w]*)");
 		m = p.matcher(s);
 		while(m.find()) {
 			String v_string = m.group(1);
@@ -170,7 +170,7 @@ public class Food {
 		}
 
 		// as above, but look for fractional numbers
-		p = Pattern.compile("(\\d+)/(\\d+)\\s?([\\s\\w]+)");
+		p = Pattern.compile("(\\d+)/(\\d+)\\s?(\\w[\\s\\w]*)");
 		m = p.matcher(s);
 		while(m.find()) {
 			String num_string = m.group(1);
