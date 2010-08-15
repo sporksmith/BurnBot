@@ -183,10 +183,12 @@ public class Food {
 		// lots of entries have grams. in these cases, also provide ounces
 		// TODO other such automatic conversions?
 		if (unitNameToAmtInServing.containsKey("g")) {
-			final double grams_per_oz = 28.3495231;
-			// including "(mass)" do disambiguate from fluid ounces
 			unitNameToAmtInServing.put("oz (mass)", 
-					unitNameToAmtInServing.get("g")/grams_per_oz);
+					unitNameToAmtInServing.get("g")/28.3495231);
+		}
+		if (unitNameToAmtInServing.containsKey("grams")) {
+			unitNameToAmtInServing.put("oz (mass)", 
+					unitNameToAmtInServing.get("grams")/28.3495231);
 		}
 	}
 }
