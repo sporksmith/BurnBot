@@ -59,7 +59,7 @@ public class AddFoodLogEntryDialog extends Dialog {
 		//WeakReference<Object> o = app.objects.get(this.foodId);
 		if (food != null) {
 			//Food food = (Food) o.get();
-			unitNamesList.addAll(food.unitNameToAmtInServing.keySet());
+			unitNamesList.addAll(food.getUnitNameToAmtInServing().keySet());
 		}
 
 		ArrayAdapter<String> unitsAdapter = new ArrayAdapter<String>(getContext(), 
@@ -92,7 +92,7 @@ public class AddFoodLogEntryDialog extends Dialog {
 			String unitName = (String) unitNames.getSelectedItem();
 			if (Double.valueOf(servings_eaten) > 0) {
 				servings_eaten = Double.valueOf(Double.valueOf(servings_eaten)
-						/ food.unitNameToAmtInServing.get(unitName)).toString();
+						/ food.getUnitNameToAmtInServing().get(unitName)).toString();
 			}
 			Spinner mealNames = (Spinner) findViewById(R.id.meals_spinner);
 			MealName mealName = (MealName) mealNames.getSelectedItem();

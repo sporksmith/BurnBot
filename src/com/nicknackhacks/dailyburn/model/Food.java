@@ -36,7 +36,7 @@ public class Food {
 	private int userId;
 	private String thumbUrl;
 	private boolean usda;
-	public Map<String, Double> unitNameToAmtInServing = new HashMap<String, Double>();
+	private Map<String, Double> unitNameToAmtInServing = null;
 
 	public String getBrand() {
 		return brand;
@@ -84,7 +84,6 @@ public class Food {
 
 	public void setServingSize(String servingSize) {
 		this.servingSize = servingSize;
-		this.addMappings(servingSize);
 	}
 
 	public float getTotalCarbs() {
@@ -143,7 +142,17 @@ public class Food {
 		this.usda = usda;
 	}
 	
+	public Map<String, Double> getUnitNameToAmtInServing() {
+		if (this.unitNameToAmtInServing == null) {
+			addMappings(this.getServingSize());
+		}
+		return this.unitNameToAmtInServing;
+	}
+	
 	private void addMappings(String s) {
+		unitNameToAmtInServing = new HashMap<String, Double>();
+		
+		// fall-back in case we don't manage to parse anything
 		unitNameToAmtInServing.put("servings", 1.0);
 		
 		Pattern p;
