@@ -160,11 +160,11 @@ public class Food {
 		
 		// look for a number, possibly with a decimal, then one or more words.
 		// space in-between is optional; often not used for grams
-		p = Pattern.compile("(\\d+\\.?\\d*)\\s?(\\w[\\s\\w]*)");
+		p = Pattern.compile("(\\d+(\\.\\d+)?)\\s?(\\w[\\s\\w]*)");
 		m = p.matcher(s);
 		while(m.find()) {
 			String v_string = m.group(1);
-			String unit_name = m.group(2);
+			String unit_name = m.group(3);
 			
 			unitNameToAmtInServing.put(unit_name, Double.valueOf(v_string));
 		}
