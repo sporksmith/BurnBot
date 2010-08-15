@@ -179,7 +179,7 @@ public class FoodListActivity extends ListActivity {
 		switch (id) {
 		case FOOD_ENTRY_DIALOG_ID:
 			final AddFoodLogEntryDialog dialog = new AddFoodLogEntryDialog(
-					this, foodDao);
+					this, foodDao, null); // FIXME
 			return dialog;
 		}
 		return super.onCreateDialog(id);
@@ -308,7 +308,7 @@ public class FoodListActivity extends ListActivity {
 			Intent intent = new Intent(
 					"com.nicknackhacks.dailyburn.FOOD_DETAIL");
 			// Make key for selected Food item
-			Long key = System.nanoTime();
+			Long key = Long.valueOf(selectedFood.getId());
 			app.objects.put(key, new WeakReference<Object>(selectedFood));
 			intent.putExtra("selectedFood", key);
 			HashMap<String, String> params = new HashMap<String, String>();

@@ -22,13 +22,20 @@
 		android:inputType="numberDecimal">
 	</EditText>
 	<Spinner
-		android:id="@+id/meals_spinner"
+		android:id="@+id/units_spinner"
 		android:layout_weight="75"
 		android:layout_width="0px"
 		android:layout_height="wrap_content"
-		android:prompt="@string/pick_meals">
+		android:prompt="@string/pick_units">
 	</Spinner>
 	</LinearLayout>
+	<Spinner
+		android:id="@+id/meals_spinner"
+		android:layout_weight="75"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:prompt="@string/pick_meals">
+	</Spinner>
 	<TextView 
 		android:text="Date eaten:" 
 		android:id="@+id/date_eaten" 

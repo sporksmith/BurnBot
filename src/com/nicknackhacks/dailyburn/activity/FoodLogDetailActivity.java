@@ -79,7 +79,7 @@ public class FoodLogDetailActivity extends Activity {
 			foodDao.deleteFoodLogEntry(detailFoodEntry.getId());
 			Intent data = new Intent();
 			// Make key for selected Food item
-			Long key = System.nanoTime();
+			Long key = new Long(detailFoodEntry.getId());
 			app.objects.put(key, new WeakReference<Object>(detailFoodEntry));
 			data.putExtra("selectedEntry", key);
 			data.putExtra("itemDeleted", true);

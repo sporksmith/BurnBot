@@ -120,8 +120,8 @@ public class FoodDetailActivity extends Activity {
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {
 		case DATE_DIALOG_ID:
-			final AddFoodLogEntryDialog dialog = new AddFoodLogEntryDialog(
-					this, foodDao);
+			AddFoodLogEntryDialog dialog = new AddFoodLogEntryDialog(
+					this, foodDao, detailFood);
 			return dialog;
 		}
 		return null;

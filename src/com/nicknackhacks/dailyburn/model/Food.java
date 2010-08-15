@@ -1,5 +1,11 @@
 package com.nicknackhacks.dailyburn.model;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /*
  * <?xml version="1.0" encoding="UTF-8"?>
  <foods type="array">
@@ -30,6 +36,7 @@ public class Food {
 	private int userId;
 	private String thumbUrl;
 	private boolean usda;
+	public Map<String, Double> unitNameToAmtInServing = new HashMap<String, Double>();
 
 	public String getBrand() {
 		return brand;
@@ -77,6 +84,7 @@ public class Food {
 
 	public void setServingSize(String servingSize) {
 		this.servingSize = servingSize;
+		this.addMappings(servingSize);
 	}
 
 	public float getTotalCarbs() {
@@ -133,5 +141,22 @@ public class Food {
 
 	public void setUsda(boolean usda) {
 		this.usda = usda;
+	}
+	
+	private void addMappings(String s) {
+		unitNameToAmtInServing.put("servings", 1.0);
+
+		// just look for grams in parens for now, which seems pretty common
+		// TODO, look for other patterns. e.g., volume measurements
+		Pattern p = Pattern.compile("\\((\\d+)g\\)");
+		Matcher m = p.matcher(s);		
+		if (m.find()) {
+			String v_string = m.group(1);
+			Double v = Double.parseDouble(v_string);
+			unitNameToAmtInServing.put("grams", v);
+			
+			final double grams_per_oz = 28.3495231;
+			unitNameToAmtInServing.put("ounces", v/grams_per_oz);
+		}
 	}
 }
