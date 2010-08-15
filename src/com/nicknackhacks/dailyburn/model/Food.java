@@ -163,21 +163,21 @@ public class Food {
 		p = Pattern.compile("(\\d+(\\.\\d+)?)\\s?(\\w[\\s\\w]*)");
 		m = p.matcher(s);
 		while(m.find()) {
-			String v_string = m.group(1);
-			String unit_name = m.group(3);
+			String vString = m.group(1);
+			String unitName = m.group(3);
 			
-			unitNameToAmtInServing.put(unit_name, Double.valueOf(v_string));
+			unitNameToAmtInServing.put(unitName, Double.valueOf(vString));
 		}
 
 		// as above, but look for fractional numbers
 		p = Pattern.compile("(\\d+)/(\\d+)\\s?(\\w[\\s\\w]*)");
 		m = p.matcher(s);
 		while(m.find()) {
-			String num_string = m.group(1);
-			String denom_string = m.group(2);
-			String unit_name = m.group(3);
+			String numString = m.group(1);
+			String denomString = m.group(2);
+			String unitName = m.group(3);
 			
-			unitNameToAmtInServing.put(unit_name, Double.valueOf(num_string) / Double.valueOf(denom_string));
+			unitNameToAmtInServing.put(unitName, Double.valueOf(numString) / Double.valueOf(denomString));
 		}
 		
 		// lots of entries have grams. in these cases, also provide ounces
