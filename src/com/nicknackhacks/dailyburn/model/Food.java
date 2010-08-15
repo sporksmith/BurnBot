@@ -153,7 +153,7 @@ public class Food {
 		unitNameToAmtInServing = new HashMap<String, Double>();
 		
 		// fall-back in case we don't manage to parse anything
-		unitNameToAmtInServing.put("servings", 1.0);
+		boolean gotBase = false;
 		
 		Pattern p;
 		Matcher m;
@@ -166,6 +166,9 @@ public class Food {
 			String vString = m.group(1);
 			String unitName = m.group(3);
 			
+			if (vString.equals("1")) {
+				gotBase = true;
+			}
 			unitNameToAmtInServing.put(unitName, Double.valueOf(vString));
 		}
 
@@ -190,5 +193,12 @@ public class Food {
 			unitNameToAmtInServing.put("oz (mass)", 
 					unitNameToAmtInServing.get("grams")/28.3495231);
 		}
+		
+		// add single-serving entry, unless we already
+		// parsed some other "base" measure
+		if (!gotBase) {
+			unitNameToAmtInServing.put("servings", 1.0);
+		}
+
 	}
 }
